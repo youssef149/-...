@@ -3,82 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر سيف - Seif Store</title>
+    <title>الموقع قيد التحديث</title>
     <style>
-        /* تم الحفاظ على نفس التنسيقات السابقة */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-        body { background-color: #ffffff; color: #111111; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        :root { --bg-white: #ffffff; --bg-gray: #f8f9fa; --border-gray: #e5e5e5; --text-dark: #111111; --text-gray: #666666; }
-        .header { background: var(--bg-white); border-bottom: 1px solid var(--border-gray); position: sticky; top: 0; z-index: 1000; padding: 15px 0; }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
-        .hero { position: relative; height: 70vh; background: url('https://files.catbox.moe/r3n3lh.jpg') center/contain no-repeat #000; display: flex; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 15px; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); }
-        .hero-content { position: relative; z-index: 1; }
-        .hero-content h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-        .btn-primary { background-color: var(--text-dark); color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block; border: none; cursor: pointer; text-align: center; }
-        .products-section { padding: 60px 20px; }
-        .section-title { text-align: center; margin-bottom: 30px; }
-        .section-title h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
-        .section-title p { color: var(--text-gray); font-size: 0.95rem; }
-        .search-container { max-width: 100%; margin: 0 auto 30px auto; }
-        .search-container input { width: 100%; padding: 12px 20px; border: 1px solid var(--border-gray); border-radius: 6px; outline: none; font-size: 1rem; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .product-card { background: var(--bg-white); border: 1px solid var(--border-gray); border-radius: 8px; overflow: hidden; position: relative; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .product-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
-        .fav-btn { position: absolute; top: 15px; left: 15px; background: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; z-index: 2; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .product-img { height: 320px; overflow: hidden; cursor: pointer; background-color: var(--bg-gray); }
-        .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
-        .product-card:hover .product-img img { transform: scale(1.05); }
-        .product-info { padding: 15px; }
-        .p-name { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
-        .p-rating { font-size: 0.85rem; margin-bottom: 10px; }
-        .p-footer { display: flex; justify-content: space-between; align-items: center; }
-        .p-price { font-weight: 700; font-size: 1rem; color: #d63031; }
-        .buy-btn { background-color: var(--bg-gray); color: var(--text-dark); border: 1px solid var(--border-gray); padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 500; font-size: 0.9rem; text-decoration: none; display: inline-block; }
-        .buy-btn:hover { background-color: var(--text-dark); color: white; }
-        .offer-banner { background-color: var(--bg-gray); border: 1px solid var(--border-gray); border-radius: 10px; padding: 40px 15px; text-align: center; margin: 30px 0; }
-        .contact-section { padding: 40px 20px 60px 20px; }
-        .contact-box { background: var(--bg-gray); border: 1px solid var(--border-gray); border-radius: 8px; padding: 25px; max-width: 100%; margin: 0 auto; text-align: center; }
-        footer { text-align: center; padding: 20px 0; border-top: 1px solid var(--border-gray); color: var(--text-gray); font-size: 0.85rem; }
-        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 15px; }
-        .popup-content { background: white; border-radius: 10px; max-width: 500px; width: 100%; padding: 20px; position: relative; }
-        .close-btn { position: absolute; top: 10px; left: 15px; font-size: 1.5rem; cursor: pointer; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+        }
+        .message-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 1px solid #e5e5e5;
+        }
+        h1 { color: #111; margin-bottom: 20px; }
+        p { color: #666; font-size: 1.1rem; margin-bottom: 30px; }
+        .contact-info {
+            background: #f1f1f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        .whatsapp-link {
+            color: #25d366;
+            text-decoration: none;
+            font-size: 1.3rem;
+            display: block;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-
-    <header class="header"><div class="container nav-container"><div class="logo">✨ SEIF</div><nav class="nav-links"><a href="#products">المنتجات</a><a href="#contact">تواصل معنا</a></nav></div></header>
-
-    <section id="home" class="hero"><div class="hero-overlay"></div><div class="hero-content"><h1>✨ ستايلك بسعر أحلى: 300 جنيه فقط ✨</h1><a href="#products" class="btn-primary">🛍️ تسوق الآن</a></div></section>
-
-    <section id="products" class="products-section container">
-        <div class="section-title"><h2>تشكيلة سيف الحصرية</h2><p>سعر موحد: 300 جنيه فقط.</p></div>
-        
-        <div class="products-grid">
-            <!-- مثال لمنتج واحد (كرر التعديل في باقي المنتجات) -->
-            <div class="product-card" data-name="قطعة سيف المميزة" data-price="300 ج.م" data-desc="تصميم عصري من برند سيف." data-img="https://files.catbox.moe/a5fq68.jpg">
-                <button class="fav-btn">❤️</button>
-                <div class="product-img"><img src="https://files.catbox.moe/a5fq68.jpg"></div>
-                <div class="product-info">
-                    <h3 class="p-name">قطعة سيف المميزة</h3>
-                    <div class="p-footer">
-                        <span class="p-price">300 ج.م</span>
-                        <a href="https://wa.me/201015296700?text=مرحباً%20سيف،%20أرغب%20في%20شراء%20المنتج%20بسعر%20300%20جنيه" class="buy-btn" target="_blank">شراء الآن</a>
-                    </div>
-                </div>
-            </div>
+    <div class="message-box">
+        <h1>الموقع قيد التحديث</h1>
+        <p>عذراً، الموقع يخضع لعملية تطوير حالياً.</p>
+        <div class="contact-info">
+            <p>لأي استفسارات، يرجى التواصل مع الدعم الفني:</p>
+            <p>المهندس يوسف شهاب</p>
+            <a href="https://wa.me/201203341381" class="whatsapp-link">01203341381</a>
         </div>
-    </section>
-
-    <script>
-        // كود بسيط لربط البيانات في الـ Popup
-        function openPopup(card) {
-            // ... (باقي كود الجافا سكريبت كما هو)
-        }
-    </script>
+    </div>
 </body>
 </html>
