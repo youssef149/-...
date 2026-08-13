@@ -2,53 +2,451 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الموقع قيد التحديث</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>اضرب أبو الهندسة 😂</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #1a1c29, #3b2854);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+        }
+
+        #game-container {
+            width: 100%;
+            height: 100%;
+            max-width: 500px;
+            max-height: 900px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* الشاشات والواجهات */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
             text-align: center;
-            padding: 20px;
+            z-index: 10;
+            background: linear-gradient(135deg, rgba(26, 28, 41, 0.95), rgba(59, 40, 84, 0.95));
+            transition: opacity 0.3s ease;
         }
-        .message-box {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 1px solid #e5e5e5;
+
+        .hidden {
+            display: none !important;
         }
-        h1 { color: #111; margin-bottom: 20px; }
-        p { color: #666; font-size: 1.1rem; margin-bottom: 30px; }
-        .contact-info {
-            background: #f1f1f1;
-            padding: 20px;
-            border-radius: 10px;
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #ddd;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.2rem;
             font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+            transition: transform 0.1s, box-shadow 0.1s;
         }
-        .whatsapp-link {
-            color: #25d366;
-            text-decoration: none;
-            font-size: 1.3rem;
-            display: block;
-            margin-top: 10px;
+
+        .btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(255, 65, 108, 0.4);
+        }
+
+        /* شريط المعلومات العلوي */
+        #hud {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 10px;
+            background: rgba(0, 0, 0, 0.3);
+            font-size: 1rem;
+            font-weight: bold;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            z-index: 5;
+        }
+
+        .hud-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* منطقة اللعب */
+        #play-area {
+            flex: 1;
+            position: relative;
+            cursor: crosshair;
+            overflow: hidden;
+        }
+
+        /* شخصية أبو الهندسة */
+        #abu-hindasa {
+            width: 90px;
+            height: 90px;
+            position: absolute;
+            background: radial-gradient(circle, #ffcc00, #ff8800);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(255, 136, 0, 0.8), inset 0 -5px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.1s;
+            font-size: 2.5rem;
+            z-index: 4;
+        }
+
+        #abu-hindasa:active {
+            transform: scale(0.85);
+        }
+
+        /* تأثير الاهتزاز */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            20% { transform: translate(-3px, 0px) rotate(-5deg); }
+            40% { transform: translate(1px, -1px) rotate(5deg); }
+            60% { transform: translate(-1px, 2px) rotate(0deg); }
+            80% { transform: translate(-3px, 1px) rotate(-3deg); }
+            100% { transform: translate(1px, -2px) rotate(3deg); }
+        }
+
+        .shake {
+            animation: shake 0.3s;
+        }
+
+        /* تأثير النقاط العائمة المتطايرة */
+        .floating-score {
+            position: absolute;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #00ffcc;
+            text-shadow: 0 0 5px rgba(0,255,204,0.8);
+            pointer-events: none;
+            animation: floatUp 0.6s ease-out forwards;
+            z-index: 6;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-50px) scale(1.3); }
+        }
+
+        /* شاشة النهاية */
+        .stats-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            width: 85%;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stats-card p {
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+
+        #new-record {
+            color: #00ffcc;
+            font-weight: bold;
+            margin-bottom: 15px;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
         }
     </style>
 </head>
 <body>
-    <div class="message-box">
-        <h1>الموقع قيد التحديث</h1>
-        <p>عذراً، الموقع يخضع لعملية تطوير حالياً.</p>
-        <div class="contact-info">
-            <p>لأي استفسارات، يرجى التواصل مع اخوك الهندسه:</p>
-            <p>المهندس يوسف شهاب</p>
-            <a href="https://wa.me/201203341381" class="whatsapp-link">01203341381</a>
+
+    <div id="game-container">
+        
+        <!-- الشاشة الرئيسية -->
+        <div id="start-screen" class="screen">
+            <h1>🎯 اضرب أبو الهندسة 😂</h1>
+            <p>هل تستطيع الإمساك به قبل أن يهرب؟</p>
+            <button class="btn" id="start-btn">▶️ ابدأ اللعبة</button>
+            <div style="margin-top: 20px; font-size: 0.9rem; color: #aaa;" id="best-score-home">🏆 أفضل نتيجة: 0</div>
         </div>
+
+        <!-- شاشة اللعب -->
+        <div id="hud" class="hidden">
+            <div class="hud-item">🎯 النقاط: <span id="score">0</span></div>
+            <div class="hud-item">⏱️ الوقت: <span id="timer">30</span></div>
+            <div class="hud-item">🔥 Combo: <span id="combo">0</span></div>
+        </div>
+
+        <div id="play-area" class="hidden">
+            <div id="abu-hindasa">🧔‍♂️</div>
+        </div>
+
+        <!-- شاشة نهاية اللعبة -->
+        <div id="game-over-screen" class="screen hidden">
+            <h1>😂 خلصت الجولة!</h1>
+            <div id="new-record" class="hidden">🎉 رقم قياسي جديد!</div>
+            <div class="stats-card">
+                <p>🎯 نتيجتك: <span id="final-score">0</span></p>
+                <p>🔥 أعلى Combo: <span id="final-combo">0</span></p>
+                <p>🏆 أفضل نتيجة: <span id="final-best">0</span></p>
+            </div>
+            <p id="random-msg" style="color: #ffcc00; font-style: italic; min-height: 40px;"></p>
+            <button class="btn" id="restart-btn">🔄 العب مرة أخرى</button>
+        </div>
+
     </div>
+
+    <script>
+        // عناصر واجهة المستخدم
+        const startScreen = document.getElementById('start-screen');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        const hud = document.getElementById('hud');
+        const playArea = document.getElementById('play-area');
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        
+        const scoreEl = document.getElementById('score');
+        const timerEl = document.getElementById('timer');
+        const comboEl = document.getElementById('combo');
+        const abu = document.getElementById('abu-hindasa');
+
+        const finalScoreEl = document.getElementById('final-score');
+        const finalComboEl = document.getElementById('final-combo');
+        const finalBestEl = document.getElementById('final-best');
+        const bestScoreHomeEl = document.getElementById('best-score-home');
+        const newRecordEl = document.getElementById('new-record');
+        const randomMsgEl = document.getElementById('random-msg');
+
+        // متغيرات اللعبة
+        let score = 0;
+        let timeLeft = 30;
+        let combo = 0;
+        let maxCombo = 0;
+        let gameInterval = null;
+        let hideTimeout = null;
+        let isPlaying = false;
+        let bestScore = localStorage.getItem('abu_hindasa_best') || 0;
+
+        bestScoreHomeEl.innerText = `🏆 أفضل نتيجة: ${bestScore}`;
+
+        // رسائل مضحكة نهاية اللعبة
+        const funnyMessages = [
+            "أبو الهندسة محتاج أجازة 😂",
+            "أبو الهندسة هرب منك 🤣",
+            "المرة الجاية حاول تمسكه أسرع 😂",
+            "ده مش أبو الهندسة، ده صاروخ كروز! 🚀",
+            "أبو الهندسة بيسلم عليك وبيقولك ضعيف في الكومبو 😜"
+        ];
+
+        // نظام الصوت البسيط (Web Audio API)
+        let audioCtx = null;
+        function playSound(type) {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'hit') {
+                    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.1);
+                } else if (type === 'miss') {
+                    osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+                    osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.15);
+                }
+            } catch (e) {
+                // تجاهل خطأ الصوت إذا لم تفعلة المتصفحات تلقائياً
+            }
+        }
+
+        // بدء اللعبة
+        startBtn.addEventListener('click', startGame);
+        restartBtn.addEventListener('click', startGame);
+
+        function startGame() {
+            startScreen.classList.add('hidden');
+            gameOverScreen.classList.add('hidden');
+            hud.classList.remove('hidden');
+            playArea.classList.remove('hidden');
+
+            score = 0;
+            timeLeft = 30;
+            combo = 0;
+            maxCombo = 0;
+            isPlaying = true;
+
+            scoreEl.innerText = score;
+            timerEl.innerText = timeLeft;
+            comboEl.innerText = combo;
+
+            moveAbu();
+
+            // عداد الوقت
+            gameInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.innerText = timeLeft;
+
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        // تحريك أبو الهندسة لمكان عشوائي مع زيادة السرعة تدريجياً
+        function moveAbu() {
+            if (!isPlaying) return;
+
+            clearTimeout(hideTimeout);
+
+            const maxX = playArea.clientWidth - abu.clientWidth;
+            const maxY = playArea.clientHeight - abu.clientHeight;
+            
+            const randomX = Math.max(10, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(10, Math.floor(Math.random() * maxY));
+
+            abu.style.left = randomX + 'px';
+            abu.style.top = randomY + 'px';
+            abu.style.display = 'flex';
+
+            // حساب سرعة الاختفاء بناءً على النقاط (تسرع تدريجياً)
+            let hideDelay = Math.max(700, 1500 - (score * 25));
+
+            hideTimeout = setTimeout(() => {
+                if (isPlaying) {
+                    combo = 0; // ضاع الكومبو لأنه تأخر
+                    comboEl.innerText = combo;
+                    playSound('miss');
+                    moveAbu();
+                }
+            }, hideDelay);
+        }
+
+        // الضغط على أبو الهندسة
+        abu.addEventListener('pointerdown', (e) => {
+            e.stopPropagation();
+            if (!isPlaying) return;
+
+            playSound('hit');
+            score += 1 + Math.floor(combo / 3); // نقاط إضافية مع ارتفاع الكومبو
+            combo++;
+            if (combo > maxCombo) maxCombo = combo;
+
+            scoreEl.innerText = score;
+            comboEl.innerText = combo;
+
+            // اهتزاز وتأثير بصري
+            abu.classList.add('shake');
+            setTimeout(() => abu.classList.remove('shake'), 300);
+
+            // إنشاء تأثير رقم النقاط العائم
+            createFloatingScore(e.clientX, e.clientY);
+
+            moveAbu();
+        });
+
+        // الضغط الخاطئ في منطقة اللعب (فقدان الكومبو)
+        playArea.addEventListener('pointerdown', (e) => {
+            if (!isPlaying) return;
+            if (e.target === playArea) {
+                combo = 0;
+                comboEl.innerText = combo;
+            }
+        });
+
+        // إنشاء رقم النقاط العائم مكان الضغطة
+        function createFloatingScore(x, y) {
+            const el = document.createElement('div');
+            el.className = 'floating-score';
+            el.innerText = `+${1 + Math.floor((combo - 1) / 3)}`;
+            el.style.left = `${x - 20}px`;
+            el.style.top = `${y - 30}px`;
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 600);
+        }
+
+        // نهاية اللعبة
+        function endGame() {
+            isPlaying = false;
+            clearInterval(gameInterval);
+            clearTimeout(hideTimeout);
+
+            hud.classList.add('hidden');
+            playArea.classList.add('hidden');
+            abu.style.display = 'none';
+            gameOverScreen.classList.remove('hidden');
+
+            finalScoreEl.innerText = score;
+            finalComboEl.innerText = maxCombo;
+
+            // التحقق من أفضل نتيجة
+            if (score > bestScore) {
+                bestScore = score;
+                localStorage.setItem('abu_hindasa_best', bestScore);
+                newRecordEl.classList.remove('hidden');
+            } else {
+                newRecordEl.classList.add('hidden');
+            }
+
+            finalBestEl.innerText = bestScore;
+            bestScoreHomeEl.innerText = `🏆 أفضل نتيجة: ${bestScore}`;
+
+            // اختيار رسالة عشوائية مضحكة
+            const randomMsg = funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
+            randomMsgEl.innerText = randomMsg;
+        }
+    </script>
 </body>
 </html>
